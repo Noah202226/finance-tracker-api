@@ -1,18 +1,26 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const Product = require("./models/product.model");
+
 const productRoute = require("./routes/product.route");
+const authRoute = require("./routes/auth.route");
+const transactionRoute = require("./routes/transaction.route");
 
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// register view engines
+app.set("view engine", "ejs");
+
 // Routes
 app.use("/api/products", productRoute);
+app.use("/auth", authRoute);
+app.use("/transactions", transactionRoute);
 
 app.get("/", (req, res) => {
-  res.send("Hello from Express App");
+  // res.send("Hello from Express App");
+  res.render("index");
 });
 
 mongoose
